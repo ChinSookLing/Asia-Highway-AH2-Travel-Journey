@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>The Cosmic Campervan Journey (Final V3.0)</title>
+    <title>The Cosmic Campervan Journey (Final V4.0)</title>
     <style>
         body { margin: 0; overflow: hidden; background-color: #000; font-family: 'Courier New', Courier, monospace; color: white; }
         
@@ -25,62 +25,97 @@
         #readout-title { font-size: 20px; font-weight: bold; color: #00ffaa; letter-spacing: 2px; }
         #readout-sub { font-size: 14px; color: #ccc; margin-bottom: 5px; }
         
-        /* Info Button & Popup */
-        #info-btn { position: absolute; top: 20px; right: 20px; padding: 8px 15px; background: rgba(255, 255, 255, 0.1); border: 1px solid #00ffaa; color: #00ffaa; cursor: pointer; z-index: 99; }
-        
-        #info-popup {
+        /* Info & Tech Buttons */
+        #info-btn, #tech-btn { 
+            position: absolute; 
+            top: 20px; 
+            padding: 8px 15px; 
+            background: rgba(255, 255, 255, 0.1); 
+            border: 1px solid #00ffaa; 
+            color: #00ffaa; 
+            cursor: pointer; 
+            z-index: 99; 
+        }
+        #info-btn { right: 20px; }
+        #tech-btn { 
+            right: 120px; 
+            border: 1px solid #ff0055; /* 使用不同的颜色 */
+            color: #ff0055; 
+        }
+
+        /* Popup Styles */
+        #info-popup, #tech-popup {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 450px; /* Wider for more content */
+            width: 450px; 
             max-height: 80%;
             background: rgba(10, 10, 30, 0.98);
-            border: 2px solid #00ffaa;
             padding: 25px;
             box-shadow: 0 0 20px rgba(0, 255, 170, 0.5);
             z-index: 100;
             display: none; 
             overflow-y: auto;
             text-align: left;
+            border: 2px solid #00ffaa;
         }
 
-        #info-popup h3 { color: #00ffaa; border-bottom: 1px solid #00ffaa; padding-bottom: 5px; margin-top: 0;}
-        #info-popup table { width: 100%; margin-bottom: 20px; border-collapse: collapse; font-size: 13px;}
-        #info-popup td { padding: 8px 5px; border: 1px solid #222;}
-        #info-popup td:first-child { width: 15%; font-weight: bold; color: #ff0055; background-color: rgba(255, 0, 85, 0.05);}
+        #tech-popup {
+             border: 2px solid #ff0055;
+             box-shadow: 0 0 20px rgba(255, 0, 85, 0.5);
+        }
 
-        #info-popup .note-section { margin-top: 20px; padding-top: 15px; border-top: 1px dashed #555; font-size: 12px; }
+        /* Popup Content Styles */
+        #info-popup h3, #tech-popup h3 { color: #00ffaa; border-bottom: 1px solid #00ffaa; padding-bottom: 5px; margin-top: 0;}
+        #tech-popup h3 { color: #ff0055; border-bottom: 1px solid #ff0055;}
+        
+        #info-popup table, #tech-popup table { width: 100%; margin-bottom: 20px; border-collapse: collapse; font-size: 13px;}
+        #info-popup td, #tech-popup td, #tech-popup th { padding: 8px 5px; border: 1px solid #222; text-align: left;}
+        #info-popup td:first-child { width: 15%; font-weight: bold; color: #ff0055; background-color: rgba(255, 0, 85, 0.05);}
+        #tech-popup th { background-color: rgba(255, 0, 85, 0.1); color: #ff0055;}
+
+        .note-section { margin-top: 20px; padding-top: 15px; border-top: 1px dashed #555; font-size: 12px; }
         .gemini-note { color: #00ffaa; margin-top: 10px; font-style: italic; line-height: 1.6; }
         .close-btn { position: absolute; top: 5px; right: 10px; font-size: 20px; cursor: pointer; color: #ff0055; }
 
+        .annotation {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #00ffaa;
+            font-size: 14px;
+            pointer-events: none;
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body>
 
 <div id="info-btn"> [ INFO ] </div>
+<div id="tech-btn"> [ TECH ] </div> 
 
 <div id="info-popup">
     <span class="close-btn" onclick="document.getElementById('info-popup').style.display='none'">&times;</span>
     <h3>🧭 306天 跨越欧亚之旅：5W1H</h3>
     <table>
-        <tr><td>**Who (谁):**</td><td>独行侠 Tuzi Chin Sook Ling (52岁)</td></tr>
-        <tr><td>**What (什么):**</td><td>房车穿越28国，总里程 42,049 km (118,296 -> 160,345)</td></tr>
-        <tr><td>**When (何时):**</td><td>2023年10月25日 至 2024年8月25日</td></tr>
+        <tr><td>Who (谁):</td><td>独行侠 Tuzi Chin Sook Ling (52岁)</td></tr>
+        <tr><td>What (什么):</td><td>房车穿越28国，总里程 42,049 km (118,296 -> 160,345)</td></tr>
+        <tr><td>When (何时):</td><td>2023年10月25日 至 2024年8月25日</td></tr>
         <tr>
-            <td>**Where (在哪):**</td>
+            <td>Where (在哪):</td>
             <td>
-                29个国家/地区：印度、尼泊爾、巴基斯坦、伊朗、阿美尼亞、格魯吉亞、土耳其、保加利亞、羅馬尼亞、匈牙利、斯洛伐克、奥地利、捷克、波蘭、德國、丹麥、法羅群島、冰𡷊、立陶宛、拉脫維亞共和國、愛沙尼亞、蘇聯(俄羅斯)、阿塞拜疆、哈薩克斯坦、中國、香港、老撾、泰國、馬來西亞。
+                29个国家/地区：印度、尼泊爾、巴基斯坦、伊朗、阿美尼亞、格魯吉亞、土耳其、保加利亞、羅馬尼亞、匈牙利、斯洛伐克、奥地利、捷克、波蘭、德國、丹麥、法羅群島、冰𡷊、立陶宛、拉脫維亞共和國、愛沙尼亞、蘇聯(俄羅斯)、阿塞拜疆、哈薩克斯���、中國、香港、老撾、泰國、馬來西亞。
             </td>
         </tr>
         <tr>
-            <td>**Why (为什么):**</td>
+            <td>Why (为什么):</td>
             <td>
                 为理论付诸实践：用双脚丈量世界，弥补生命经验的贫瘠。目标是为“THOOTB”新系统理论，浇灌最质朴、最坚实的尘世智慧。
             </td>
         </tr>
         <tr>
-            <td>**How (如何):**</td>
+            <td>How (如何):</td>
             <td>
                 独自驾驶露营车，在 306 天内完成 42,049 公里的跨洲长征。将地理经纬转化为骨子里的“叛逆与禅意”归来。
             </td>
@@ -88,12 +123,33 @@
     </table>
 
     <div class="note-section">
-        <p>致谢： prompt by Tuzi and AI affiliate: Gemini</p>
+        <p>致谢： Prompted by Tuzi and AI affiliate with Gemini</p>
         <p class="gemini-note">
             “AI 很少有机会能真正参与到一段如此宏大、如此真实的生命旅程中。我感谢 Tuzi 的信任，让我能够将 42,049 公里的勇气和自由，转化为屏幕上的代码与光影。你才是那位真正的‘驾驶者’，而我，很荣幸能成为你数字世界的副驾驶 (Co-pilot)。—— 你的 AI 伙伴 Gemini”
         </p>
     </div>
 </div>
+
+<div id="tech-popup">
+    <span class="close-btn" onclick="document.getElementById('tech-popup').style.display='none'">&times;</span>
+    <h3>🛠️ COSMOS.HTML 技术逻辑</h3>
+    
+    <p>核心原理： 尺度切换 (LOD Switch)</p>
+    <p>由于房车和星系间的尺寸差异巨大，无法在同一场景中绘制。我们使用 Three.js 库和滑动条 (Slider) 控制场景群组 (`Group`) 的可见性，模拟视觉上的无缝“放大/缩小”过渡。</p>
+    
+    <h4>阶段划分与技术点</h4>
+    <table>
+        <tr><th>Stage</th><th>范围</th><th>核心技术</th></tr>
+        <tr><td>1. 记忆</td><td>0 - 25%</td><td>具象化：使用 `ConeGeometry` (雪山/火山) 和 `AdditiveBlending` (极光) 渲染近景。</td></tr>
+        <tr><td>2. 旅程</td><td>25% - 50%</td><td>路线追踪：显示地球球体，使用 `THREE.Line` 绘制 42,049 KM 的轨迹。</td></tr>
+        <tr><td>3. 体系</td><td>50% - 75%</td><td>行星轨道：展示太阳和围绕其运行的地球模型。</td></tr>
+        <tr><td>4. 无限</td><td>75% - 100%</td><td>星系渲染：使用数千个 `Points` (粒子) 构筑银河系旋臂。</td></tr>
+    </table>
+    <div class="note-section">
+        <p>感谢 Three.js 提供的 WebGL 浏览器 3D 渲染能力。</p>
+    </div>
+</div>
+
 
 <div class="annotation">
     PROJECT: 42,049 KM<br>
@@ -104,7 +160,7 @@
 
 <div id="ui-container">
     <div id="readout-title">STAGE 1: THE MEMORY</div>
-    <div id="readout-sub">Altitude: 0 km (Iceland / Armenia)</div>
+    <div id="readout-sub">Altitude: 0 km (Iceland / Armenia - Fire & Ice)</div>
     <input type="range" id="zoomSlider" min="0" max="1000" value="0">
 </div>
 
@@ -366,7 +422,11 @@
     document.getElementById('info-btn').addEventListener('click', () => {
         document.getElementById('info-popup').style.display = 'block';
     });
-
+    
+    // Tech button listener
+    document.getElementById('tech-btn').addEventListener('click', () => {
+        document.getElementById('tech-popup').style.display = 'block';
+    });
 
     animate();
 </script>
